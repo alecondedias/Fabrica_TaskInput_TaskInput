@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Fábrica do TaskInput</title>
+  <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+  <a class="pular" href="#linha">Ir para a esteira</a>
+
+  <!-- Tela inicial: como funciona e escolhas antes de começar -->
+  <main id="tela-inicio" class="tela tela-inicio">
+    <div class="inicio-coluna">
+      <h1 class="inicio-titulo">Fábrica do TaskInput</h1>
+      <p class="inicio-lead">
+        O texto digitado vira um bilhete que viaja por uma esteira. Cada trecho de código é uma
+        máquina. Monte a linha, ligue a esteira e veja o celular de teste reagir.
+      </p>
+
+      <ol class="como">
+        <li>
+          <strong>Monte a linha.</strong>
+          Arraste as peças da bandeja para os encaixes da esteira. Também vale clicar na peça e depois
+          no encaixe, ou usar Tab, Enter e as setas.
+        </li>
+        <li>
+          <strong>Ligue a esteira.</strong>
+          Os bilhetes de teste passam por cada máquina. O botão Passo a passo avança uma máquina por vez.
+        </li>
+        <li>
+          <strong>Errou? A esteira mostra onde.</strong>
+          Uma janela explica qual máquina falhou e o que o código realmente faz. Em cada estação há
+          peças que parecem certas e não são.
+        </li>
+      </ol>
+
+      <form class="inicio-opcoes" id="form-inicio" autocomplete="off">
+        <fieldset class="opcao-grupo">
+          <legend>Dicas durante o jogo</legend>
+          <label class="opcao">
+            <input type="radio" name="dicas" value="limitada" checked>
+            <span><strong>6 dicas</strong> no jogo todo</span>
+          </label>
+          <label class="opcao">
+            <input type="radio" name="dicas" value="ilimitada">
+            <span><strong>Dicas ilimitadas</strong></span>
+          </label>
+        </fieldset>
+        <label class="opcao opcao-solta">
+          <input type="checkbox" id="opt-tutorial" checked>
+          <span>Mostrar o tutorial na primeira estação</span>
+        </label>
+        <button type="submit" class="botao botao-primario botao-grande" id="btn-comecar">Começar</button>
+      </form>
+      <p class="inicio-nota">Quem conduz a atividade pode apertar <kbd>G</kbd> a qualquer momento para abrir o guia do professor.</p>
+    </div>
+    <div class="inicio-ilu" id="ilu-inicio" aria-hidden="true"></div>
+  </main>
+
+  <!-- Jogo -->
+  <div id="tela-jogo" class="tela tela-jogo" hidden>
+    <header class="topo">
+      <div class="topo-marca">
+        <span class="marca" id="marca-topo" aria-hidden="true"></span>
+        <span class="topo-titulo">Fábrica do TaskInput</span>
+      </div>
+      <ol class="passos" id="passos" aria-label="Estações"></ol>
+      <div class="topo-info" id="topo-info" aria-live="polite"></div>
+      <button type="button" class="botao botao-topo" id="btn-guia" title="Guia do professor (tecla G)">Guia</button>
+    </header>
+
+    <section class="barra" aria-label="Estação atual">
+      <h1 class="barra-nome" id="est-nome"></h1>
+      <p class="barra-pedido" id="est-pedido"></p>
+    </section>
+
+    <div class="fabrica">
+      <section class="linha" id="linha" aria-label="Linha de produção">
+        <div class="faixa" id="faixa"></div>
+
+        <div class="esteira-painel">
+          <ul class="chips" id="chips" aria-label="Pacotes de teste"></ul>
+          <div class="esteira" id="esteira"></div>
+        </div>
+
+        <div class="controles" id="controles">
+          <button type="button" class="botao botao-primario botao-ligar" id="btn-ligar"></button>
+          <button type="button" class="botao" id="btn-passo"></button>
+          <div class="velocidade" id="velocidade" role="group" aria-label="Velocidade da esteira">
+            <button type="button" data-vel="lento" aria-pressed="false">Lenta</button>
+            <button type="button" data-vel="normal" aria-pressed="true">Normal</button>
+            <button type="button" data-vel="rapido" aria-pressed="false">Rápida</button>
+          </div>
+          <button type="button" class="botao botao-discreto" id="btn-parar" disabled></button>
+        </div>
+
+        <div class="legenda" id="legenda" role="status" aria-live="polite"></div>
+
+        <section class="bandeja" id="bandeja" aria-label="Bandeja de peças">
+          <div class="bandeja-botoes">
+            <button type="button" class="botao" id="btn-dica"></button>
+            <button type="button" class="botao" id="btn-desfazer"></button>
+          </div>
+          <div class="pecas" id="pecas"></div>
+        </section>
+      </section>
+
+      <aside class="lado" id="lado" aria-label="Celular de teste">
+        <h2 class="lado-titulo">Celular de teste</h2>
+        <div class="lado-celular" id="celular"></div>
+        <p class="lado-nota" id="lado-nota"></p>
+      </aside>
+    </div>
+  </div>
+
+  <!-- Tela final -->
+  <main id="tela-fim" class="tela tela-fim" hidden>
+    <div class="fim-coluna">
+      <div class="fim-resumo" id="fim-resumo"></div>
+      <section class="cola" id="cola" aria-label="Cola de revisão"></section>
+    </div>
+  </main>
+
+  <div id="camada-modal" class="camada-modal" hidden></div>
+  <div id="fantasma" class="fantasma" hidden aria-hidden="true"></div>
+  <div id="toast" class="toast" role="status" hidden></div>
+  <div id="anuncio" class="so-leitor" aria-live="polite" aria-atomic="true"></div>
+
+  <script src="dados.js"></script>
+  <script src="maquinas.js"></script>
+  <script src="visor.js"></script>
+  <script src="motor.js"></script>
+  <script src="jogo.js"></script>
+</body>
+</html>
